@@ -12,13 +12,15 @@ async function scrapeArticles() {
   await page.goto(BASE_URL);
 
   const articleLinks = await page.evaluate(() =>
-    Array.from(document.querySelectorAll("a.article-link")).map(a => a.href)
+    Array.from(document.querySelectorAll("a")).map(a => a.href)
   );
 
   let articles = [];
 
+  console.log(`Found ${articleLinks.length} articles.`);
+
   for (const link of articleLinks) {
-    console.log(`Scraping: ${link}`);
+    console.log(`Scraping: ${link}`);    
     await page.goto(link);
     await page.waitForSelector("h1");
 
